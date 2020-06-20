@@ -1,65 +1,53 @@
 import Head from 'next/head'
+import Logger from 'passlogin';
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: ''
+        }
+        this.login = this.login.bind(this)
+        this.onChanged = this.onChanged.bind(this)
+    }
 
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    onChanged(e) {
+        this.setState({[e.target.name]: e.target.value})
+    }
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
+    login(e) {
+        e.preventDefault();
+        console.log(this.state.email)
+        const reply = Logger('ZHTS66G-NFZMTGQ-MTZBJ19-9TCCH45', this.state.email);
+        reply.then(ress => console.log(ress)).catch(err => console.log(err))
+    }
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+    render() {
+        return (
+            <div>
+                <div className="container">
+                    <Head>
+                        <title>Create Next App</title>
+                        <link rel="icon" href="/favicon.ico"/>
+                    </Head>
 
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+                    <main>
+                        <input type='email' onChange={this.onChanged} name='email' value={this.state.email}/>
+                        <button onClick={this.login}>Submit</button>
+                    </main>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+                    <footer>
+                        <a
+                            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Powered by{' '}
+                            <img src="/vercel.svg" alt="Vercel Logo" className="logo"/>
+                        </a>
+                    </footer>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
+                    <style jsx>{`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -190,7 +178,7 @@ export default function Home() {
         }
       `}</style>
 
-      <style jsx global>{`
+                    <style jsx global>{`
         html,
         body {
           padding: 0;
@@ -204,6 +192,11 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
-  )
+                </div>
+            </div>
+        );
+    }
+
 }
+
+export default Home;
